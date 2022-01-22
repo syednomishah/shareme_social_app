@@ -24,6 +24,10 @@ export default function Login() {
             navigate('/', {replace: true})
         })
     }
+
+    const onResponseFail = res=>{
+        console.log('response failed: ',res);
+    }
     return (
         <div className="flex justify-center items-center flex-col h-screen">
             <div className="relative h-full w-full">
@@ -54,7 +58,7 @@ export default function Login() {
                             )}
                             buttonText="Login with Google"
                             onSuccess={onSuccessResponseGoogle}
-                            // onFailure={responseGoogle}
+                            onFailure={onResponseFail}
                             cookiePolicy={'single_host_origin'}
                         />
                     </div>
