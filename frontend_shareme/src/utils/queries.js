@@ -62,7 +62,7 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
     return query;
   };
   
-  export const pinDetailMorePinQuery = (pin) => {
+  export const similarPinsQuery = (pin) => {
     const query = `*[_type == "pin" && category == '${pin.category}' && _id != '${pin._id}' ]{
       image{
         asset->{
@@ -196,6 +196,42 @@ export const searchPins = key =>{
         })
     })
     
+}
+export const getSimilarPins = pin =>{
+    return new Promise(function (resolve, reject){
+        let query = similarPinsQuery(pin);
+        client.fetch(query).then(data=>{
+            resolve(data);
+        })
+    })
+    
+}
+export const getUserSavedPins = userId =>{
+    return new Promise(function (resolve, reject){
+        let query = userSavedPinsQuery(userId);
+        client.fetch(query).then(data=>{
+            resolve(data);
+        })
+    })
+    
+}
+export const getUserCreatePins = userId =>{
+    return new Promise(function (resolve, reject){
+        let query = userCreatedPinsQuery(userId);
+        client.fetch(query).then(data=>{
+            resolve(data);
+        })
+    })
+    
+}
+
+export const getPinDetail = id=>{
+  return new Promise(function (resolve, reject){
+    let query = pinDetailQuery(id);
+    client.fetch(query).then(data=>{
+        resolve(data[0]);
+    })
+})
 }
 
 
