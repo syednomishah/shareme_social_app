@@ -8,20 +8,32 @@ import { Sidebar, UserProfile  } from '../components';
 import Pins from './Pins';
 import { userQuery } from '../utils/data';
 import { getUser } from '../utils/queries';
+import {useNavigate} from 'react-router-dom';
+
 
 export default function Home() {
 
     const [sidebar, toggleSidebar] = useState(false); 
     const [user , setUser] = useState(null);
     const scrollRef = createRef(null);
+    const navigate = useNavigate();
 
     const userInfo = localStorage.getItem('user')? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
 
     useEffect(()=>{
+        
         getUser(userInfo?.googleId).then(user=>{
             setUser(user);
         })
+        
     },[]);
+    useEffect(()=>{
+        if(user){
+            getUser(userInfo?.googleId).then(user=>{
+                setUser(user);
+            })
+        }    
+    },[user]);
 
     useEffect(()=>{
         scrollRef.current.scrollTo(0,0);

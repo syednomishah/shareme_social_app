@@ -18,7 +18,7 @@ const PinDetail = ({ user }) => {
   const fetchPinDetails = (pinId) => {
     getPinDetail(pinId).then(data=>{
         setPinDetail(data);
-        console.log(data);
+        // console.log(data);
         if (data) {
             getSimilarPins(data).then(similarPins=>{
                 setPins(similarPins);
@@ -106,25 +106,30 @@ const PinDetail = ({ user }) => {
                 </div>
               ))}
             </div>
-            <div className="flex flex-wrap mt-6 gap-3">
-              <Link to={`/user-profile/${user._id}`}>
-                <img src={user.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
-              </Link>
-              <input
-                className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
-                type="text"
-                placeholder="Add a comment"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-              <button
-                type="button"
-                className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
-                onClick={addComment}
-              >
-                {addingComment ? 'Doing...' : 'Done'}
-              </button>
-            </div>
+            {
+                user && user._id?(
+                    <div className="flex flex-wrap mt-6 gap-3">
+                    <Link to={`/user-profile/${user?._id}`}>
+                      <img src={user?.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
+                    </Link>
+                    <input
+                      className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
+                      type="text"
+                      placeholder="Add a comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
+                      onClick={addComment}
+                    >
+                      {addingComment ? 'Doing...' : 'Done'}
+                    </button>
+                  </div>
+                ):null
+            }
+            
           </div>
         </div>
       )}
